@@ -4,7 +4,7 @@ from sgdml.predict import GDMLPredict
 
 
 def load_sgdml_model(self, path):
-    a = np.load(path)
+    a = np.load(path, allow_pickle=True)
     training_indices = a["idxs_train"]
     m = GDMLPredict(a)
     return m, training_indices
@@ -17,7 +17,9 @@ def load_npz_prepredicted(self, path):
 
 
 def sgdml_all_default(train_indices, args):
-    from sgdml.cli import create, train, validate, select, test
+    # from sgdml.cli import create, train, validate, select, test
+    from sgdml.cli import create, validate, select, test
+    from .sgdml_fix import train
     from sgdml.utils import ui, io
 
     ui.print_step_title("STEP 1", "Cross-validation task creation")
